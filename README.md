@@ -145,4 +145,6 @@ Implement a toy linker `ld` to link the object files into an executable file. To
 1. As a special reminder, these stuffs get full credit ( 100 [lab + HW + mid-term] + 92 [final] = 98 ) in 2024.
 2. I will not maintain this repository. No PRs will be accepted. While you can still open an issue if you find any mistakes in this repository or if you have some questions about this course.
 3. If you want to reference any code in this repository, please feel free to do so. You don't need to ask for permission or even site this repo as reference. Yet, if you are taking this course, please do not copy the code.
-4. If you find this repository helpful, please give it a star 🌟. It will be a great encouragement for me to keep writing.
+4. If you find this repository helpful, please give me a star 🌟. It will be a great encouragement for me to keep writing.
+5. Vim is the best code editor in the world!
+
