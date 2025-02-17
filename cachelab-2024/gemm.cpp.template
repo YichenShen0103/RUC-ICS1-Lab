@@ -1,0 +1,107 @@
+// template file for gemm.cpp, check the parabuild_example/README.md for more details
+
+#include "cachelab.h"
+
+#define m case0_m
+#define n case0_n
+#define p case0_p
+
+// 我们用这个 2*2*2 的矩阵乘法来演示寄存器是怎么被分配的
+void gemm_case0(ptr_reg A, ptr_reg B, ptr_reg C, ptr_reg buffer) {  // allocate 0 1 2 3
+    for (reg i = 0; i < m; ++i) {                                   // allocate 4
+        for (reg j = 0; j < p; ++j) {                               // allocate 5
+            reg tmpc = 0;                                           // allocate 6
+            for (reg k = 0; k < n; ++k) {                           // allocate 7
+                reg tmpa = A[i * n + k];                            // allocate 8
+                reg tmpb = B[k * p + j];                            // allocate 9
+                tmpc += tmpa * tmpb;
+            }  // free 9 8
+            // free 7
+            C[i * p + j] = tmpc;
+        }  // free 6
+        // free 5
+    }
+    // free 4
+}  // free 3 2 1 0
+
+#undef m
+#undef n
+#undef p
+
+#define m case1_m
+#define n case1_n
+#define p case1_p
+
+#define BLOCK_SIZE {{BLOCK_SIZE_1}}
+
+#define loopi for (reg i = 0; i < m; i += BLOCK_SIZE)
+#define loopj for (reg j = 0; j < p; j += BLOCK_SIZE)
+#define loopk for (reg k = 0; k < n; k += BLOCK_SIZE)
+
+void gemm_case1(ptr_reg A, ptr_reg B, ptr_reg C, ptr_reg buffer) {
+    loop{{loop1}} {
+        loop{{loop2}} {
+            loop{{loop3}} {
+                for (reg ii = 0; ii < BLOCK_SIZE; ++ii) {
+                    for (reg jj = 0; jj < BLOCK_SIZE; ++jj) {
+                        reg tmpc = C[(i + ii) * m + j + jj];
+                        for (reg kk = 0; kk < BLOCK_SIZE; ++kk) {
+                            reg tmpa = A[(i + ii) * n + k + kk];
+                            reg tmpb = B[(k + kk) * p + j + jj];
+                            tmpc += tmpa * tmpb;
+                        }
+                        C[(i + ii) * m + j + jj] = tmpc;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#undef m
+#undef n
+#undef p
+
+#define m case2_m
+#define n case2_n
+#define p case2_p
+
+void gemm_case2(ptr_reg A, ptr_reg B, ptr_reg C, ptr_reg buffer) {
+    for (reg i = 0; i < m; ++i) {
+        for (reg j = 0; j < p; ++j) {
+            reg tmpc = 0;
+            for (reg k = 0; k < n; ++k) {
+                reg tmpa = A[i * n + k];
+                reg tmpb = B[k * p + j];
+                tmpc += tmpa * tmpb;
+            }
+            C[i * p + j] = tmpc;
+        }
+    }
+}
+
+#undef m
+#undef n
+#undef p
+
+#define m case3_m
+#define n case3_n
+#define p case3_p
+
+void gemm_case3(ptr_reg A, ptr_reg B, ptr_reg C, ptr_reg buffer) {
+    for (reg i = 0; i < m; ++i) {
+        for (reg j = 0; j < p; ++j) {
+            reg tmpc = 0;
+            for (reg k = 0; k < n; ++k) {
+                reg tmpa = A[i * n + k];
+                reg tmpb = B[k * p + j];
+                tmpc += tmpa * tmpb;
+            }
+            C[i * p + j] = tmpc;
+        }
+    }
+}
+
+#undef m
+#undef n
+#undef p

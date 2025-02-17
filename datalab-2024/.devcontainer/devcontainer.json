@@ -1,0 +1,25 @@
+{
+    "name": "DataLab",
+    "build": {
+        "dockerfile": "../Dockerfile",
+        "context": ".."
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "editor.formatOnSave": false,
+                "[c]": {
+                    "editor.defaultFormatter": "xaver.clang-format"
+                },
+                "[cpp]": {
+                    "editor.defaultFormatter": "xaver.clang-format"
+                },
+                "C_Cpp.default.cStandard": "gnu99"
+            },
+            "extensions": [
+                "ms-vscode.cpptools",
+                "xaver.clang-format"
+            ]
+        }
+    }
+}

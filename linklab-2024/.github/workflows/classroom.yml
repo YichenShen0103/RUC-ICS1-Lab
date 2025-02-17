@@ -1,0 +1,53 @@
+name: GitHub Classroom Autograding
+
+on:
+  - push
+  - repository_dispatch
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  autograding:
+    name: Autograding
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout reference answer
+        run: |
+          if [ $GITHUB_REPOSITORY = "RUCICS/LinkLab-2024-Assignment" ]; then
+            curl -o src/student/ld.cpp ${{ secrets.LINKLAB_REF_LD_GIST_URL }} 
+            curl -o src/student/nm.cpp ${{ secrets.LINKLAB_REF_NM_GIST_URL }} 
+          fi
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install rich tomli
+
+      - name: Run tests
+        id: tests
+        uses: panjd123/autograding-command-grader@v1
+        with:
+          test-name: tests
+          setup-command: |
+            make all
+          command: python3 grader.py --write-result
+          timeout: 10
+          max-score: 100
+
+      - name: Report results
+        uses: panjd123/autograding-grading-reporter@v1
+        env:
+          TESTS_RESULTS: ${{ steps.tests.outputs.result }}
+        with:
+          runners: tests

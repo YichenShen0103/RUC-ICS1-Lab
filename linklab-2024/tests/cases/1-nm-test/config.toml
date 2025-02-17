@@ -1,0 +1,21 @@
+[meta]
+name = "nm Tool Test"
+description = "Test the implementation of nm tool for displaying symbol table (order independent)"
+score = 10
+
+[[run]]
+name = "Compile program"
+command = "${root_dir}/cc"
+args = ["${test_dir}/main.c", "-o", "${build_dir}/main.o", "-g"]
+
+[run.check]
+return_code = 0
+files = ["${build_dir}/main.fle"]
+
+[[run]]
+name = "Run nm"
+command = "${root_dir}/nm"
+args = ["${build_dir}/main.fle"]
+
+[run.check]
+special_judge = "judge.py"

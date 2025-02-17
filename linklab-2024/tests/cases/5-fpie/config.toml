@@ -1,0 +1,90 @@
+[meta]
+name = "Position Independent Executable Test"
+description = "Test compilation and linking with -fPIE option, using a complex math library"
+score = 10
+
+[[run]]
+name = "Compile mathlib.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/mathlib.c",
+    "-o",
+    "${build_dir}/mathlib.o",
+    "-I${common_dir}",
+    "-I${test_dir}",
+    "-g",
+    "-Os",
+    "-fPIE",
+]
+
+[run.check]
+files = ["${build_dir}/mathlib.fle"]
+
+[[run]]
+name = "Compile mathlib_utils.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/mathlib_utils.c",
+    "-o",
+    "${build_dir}/mathlib_utils.o",
+    "-I${common_dir}",
+    "-I${test_dir}",
+    "-g",
+    "-Os",
+    "-fPIE",
+]
+
+[run.check]
+files = ["${build_dir}/mathlib_utils.fle"]
+
+[[run]]
+name = "Compile main.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/main.c",
+    "-o",
+    "${build_dir}/main.o",
+    "-I${common_dir}",
+    "-I${test_dir}",
+    "-g",
+    "-Os",
+    "-fPIE",
+]
+
+[run.check]
+files = ["${build_dir}/main.fle"]
+
+[[run]]
+name = "Link program"
+command = "${root_dir}/ld"
+args = [
+    "${build_dir}/main.fle",
+    "${build_dir}/mathlib.fle",
+    "${build_dir}/mathlib_utils.fle",
+    "${common_dir}/minilibc.fle",
+    "-o",
+    "${build_dir}/program",
+]
+
+[run.check]
+files = ["${build_dir}/program"]
+
+[[run]]
+name = "Run program"
+command = "${root_dir}/exec"
+args = ["${build_dir}/program"]
+
+[run.check]
+return_code = 0
+stdout_pattern = """PI = 3141
+E = 2718
+add\\(42, 10\\) = 52
+subtract\\(42, 10\\) = 32
+multiply\\(42, 10\\) = 420
+divide\\(42, 10\\) = 4
+factorial\\(5\\) = 120
+fibonacci\\(7\\) = 13
+gcd\\(48, 18\\) = 6
+lcm\\(48, 18\\) = 144
+array_sum = 15
+array_sorted = 1 2 3 4 5"""

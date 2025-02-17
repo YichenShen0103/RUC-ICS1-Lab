@@ -1,0 +1,80 @@
+name: 改进建议
+description: 为实验提出改进建议
+title: "[建议] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你为实验提出改进建议！请详细描述你的想法，这将帮助我们不断完善实验内容。
+
+  - type: dropdown
+    id: task
+    attributes:
+      label: 相关任务
+      description: 这个建议主要涉及哪个任务？
+      options:
+        - 任务零：理解目标文件格式
+        - 任务一：窥探程序的符号表
+        - 任务二：实现基础链接器
+        - 任务三：实现相对重定位
+        - 任务四：处理符号冲突和局部符号
+        - 任务五：处理64位地址
+        - 任务六：分离代码和数据
+        - 整体框架/测试系统
+        - 其他
+      multiple: true
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题描述
+      description: 描述当前实验中存在的问题或不足
+      placeholder: 请详细说明你发现的问题
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 改进建议
+      description: 详细描述你的改进建议
+      placeholder: 请具体说明你的改进想法
+    validations:
+      required: true
+
+  - type: textarea
+    id: benefits
+    attributes:
+      label: 预期效果
+      description: 描述实施改进后会带来什么好处
+      placeholder: 例如：提高学习效果、减少不必要的工作量等
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: 实施建议
+      description: 如果你有具体的实施方案，请在此说明
+      placeholder: 可以包含具体的修改建议、新增内容等
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 其他方案
+      description: 是否考虑过其他替代方案？为什么选择这个方案？
+      placeholder: 请说明你考虑过的其他方案及其优缺点
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: 确认事项
+      description: 在提交建议前，请确认以下内容
+      options:
+        - label: 我已经检查过现有的issues，确认这不是一个重复的建议
+          required: true
+        - label: 这个建议是具体且可实施的
+          required: true 

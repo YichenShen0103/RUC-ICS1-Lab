@@ -1,0 +1,74 @@
+[meta]
+name = "Multiple Weak Symbol Warning"
+description = "Test linker warnings when multiple weak symbols are defined"
+score = 10
+
+[[run]]
+name = "Compile main.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/main.c",
+    "-o",
+    "${build_dir}/main.o",
+    "-I${common_dir}",
+    "-g",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/main.fle"]
+
+[[run]]
+name = "Compile weak1.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/weak1.c",
+    "-o",
+    "${build_dir}/weak1.o",
+    "-I${common_dir}",
+    "-g",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/weak1.fle"]
+
+[[run]]
+name = "Compile weak2.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/weak2.c",
+    "-o",
+    "${build_dir}/weak2.o",
+    "-I${common_dir}",
+    "-g",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/weak2.fle"]
+
+[[run]]
+name = "Link program"
+command = "${root_dir}/ld"
+args = [
+    "${build_dir}/main.fle",
+    "${build_dir}/weak1.fle",
+    "${build_dir}/weak2.fle",
+    "${common_dir}/minilibc.fle",
+    "-o",
+    "${build_dir}/program",
+]
+
+[run.check]
+files = ["${build_dir}/program"]
+# stderr_pattern = ".*multiple definition.*shared_var.*"
+
+[[run]]
+name = "Run program"
+command = "${root_dir}/exec"
+args = ["${build_dir}/program"]
+
+[run.check]
+return_code = 0
+stdout_pattern = "shared_var = (100|200)" # Either weak symbol value might be used

@@ -1,0 +1,105 @@
+[meta]
+name = "Local Symbol Access Test"
+description = "Test accessing local symbols across modules (should fail)"
+score = 10
+
+[[run]]
+name = "Compile foo.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/foo.c",
+    "-o",
+    "${build_dir}/foo.o",
+    "-I${common_dir}",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/foo.fle"]
+
+[[run]]
+name = "Compile bar.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/bar.c",
+    "-o",
+    "${build_dir}/bar.o",
+    "-I${common_dir}",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/bar.fle"]
+
+[[run]]
+name = "Compile main.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/main.c",
+    "-o",
+    "${build_dir}/main.o",
+    "-I${common_dir}",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/main.fle"]
+
+[[run]]
+name = "Compile main2.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/main2.c",
+    "-o",
+    "${build_dir}/main2.o",
+    "-I${common_dir}",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/main2.fle"]
+
+[[run]]
+name = "Link program1"
+command = "${root_dir}/ld"
+args = [
+    "${build_dir}/main.fle",
+    "${build_dir}/foo.fle",
+    "${common_dir}/minilibc.fle",
+    "-o",
+    "${build_dir}/program1",
+]
+score = 5
+must_pass = false
+
+[run.check]
+return_code = 1
+stderr_pattern = "(U|u)ndefined symbol: _local_var"
+
+
+[[run]]
+name = "Link program2"
+command = "${root_dir}/ld"
+args = [
+    "${build_dir}/main2.fle",
+    "${build_dir}/foo.fle",
+    "${build_dir}/bar.fle",
+    "${common_dir}/minilibc.fle",
+    "-o",
+    "${build_dir}/program2",
+]
+
+[run.check]
+return_code = 0
+files = ["${build_dir}/program2"]
+
+[[run]]
+name = "Run program2"
+command = "${root_dir}/exec"
+args = ["${build_dir}/program2"]
+score = 5
+must_pass = false
+
+[run.check]
+return_code = 0
+stdout = "ans2.out"

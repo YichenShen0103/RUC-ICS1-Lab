@@ -1,0 +1,35 @@
+[meta]
+name = "Single File Test"
+description = "Basic test for single file compilation with direct entry point"
+score = 10
+
+[[run]]
+name = "Compile program"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/main.c",
+    "-o",
+    "${build_dir}/main.o",
+    "-nostdlib",           # No standard library needed
+    "-nostartfiles",       # No start files needed
+]
+
+[run.check]
+return_code = 0
+files = ["${build_dir}/main.fle"]
+
+[[run]]
+name = "Link program"
+command = "${root_dir}/ld"
+args = ["${build_dir}/main.fle", "-o", "${build_dir}/program"]
+
+[run.check]
+files = ["${build_dir}/program"]
+
+[[run]]
+name = "Run program"
+command = "${root_dir}/exec"
+args = ["${build_dir}/program"]
+
+[run.check]
+return_code = 100

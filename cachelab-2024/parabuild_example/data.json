@@ -1,0 +1,26 @@
+[
+    {
+        "BLOCK_SIZE_1": 4,
+        "loop1": "i",
+        "loop2": "j",
+        "loop3": "k"
+    },
+    {
+        "BLOCK_SIZE_1": 4,
+        "loop1": "k",
+        "loop2": "i",
+        "loop3": "j"
+    },
+    {
+        "BLOCK_SIZE_1": 8,
+        "loop1": "i",
+        "loop2": "j",
+        "loop3": "k"
+    },
+    {
+        "BLOCK_SIZE_1": 8,
+        "loop1": "k",
+        "loop2": "i",
+        "loop3": "j"
+    }
+]

@@ -1,0 +1,10 @@
+.vscode
+ishow
+fshow
+btest
+venv/
+.autograder_result
+result.txt
+__pycache__
+yacctab.py
+lextab.py

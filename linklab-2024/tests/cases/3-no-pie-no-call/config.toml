@@ -1,0 +1,59 @@
+[meta]
+name = "Absolute Addressing Test"
+description = "Test absolute addressing in non-PIE mode using only global variables and direct syscalls, with no function calls"
+score = 10
+
+[[run]]
+name = "Compile program"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/main.c",
+    "-o",
+    "${build_dir}/main.o",
+    "-g0",
+    "-Os",
+    "-fno-PIE",            # Disable PIE
+    "-fno-PIC",            # Disable PIC
+]
+
+[run.check]
+return_code = 0
+files = ["${build_dir}/main.fle"]
+
+[[run]]
+name = "Compile program"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/foo.c",
+    "-o",
+    "${build_dir}/foo.o",
+    "-g0",
+    "-Os",
+    "-fno-PIE",           # Disable PIE
+    "-fno-PIC",           # Disable PIC
+]
+
+[run.check]
+return_code = 0
+files = ["${build_dir}/foo.fle"]
+
+[[run]]
+name = "Link program"
+command = "${root_dir}/ld"
+args = [
+    "${build_dir}/main.fle",
+    "${build_dir}/foo.fle",
+    "-o",
+    "${build_dir}/program",
+]
+
+[run.check]
+files = ["${build_dir}/program"]
+
+[[run]]
+name = "Run program"
+command = "${root_dir}/exec"
+args = ["${build_dir}/program"]
+
+[run.check]
+return_code = 120

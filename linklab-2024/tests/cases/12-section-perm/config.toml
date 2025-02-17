@@ -1,0 +1,146 @@
+[meta]
+name = "Section Permission Control Test"
+description = "Test if section permissions (read/write/execute) are correctly implemented and enforced"
+score = 10
+
+[[run]]
+name = "Compile test utilities"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/test_utils.c",
+    "-o",
+    "${build_dir}/test_utils.o",
+    "-I${common_dir}",
+    "-g",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/test_utils.fle"]
+return_code = 0
+
+[[run]]
+name = "Compile main1.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/main1.c",
+    "-o",
+    "${build_dir}/main1.o",
+    "-I${common_dir}",
+    "-g",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/main1.fle"]
+return_code = 0
+
+[[run]]
+name = "Compile main2.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/main2.c",
+    "-o",
+    "${build_dir}/main2.o",
+    "-I${common_dir}",
+    "-g",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/main2.fle"]
+return_code = 0
+
+[[run]]
+name = "Compile main3.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/main3.c",
+    "-o",
+    "${build_dir}/main3.o",
+    "-I${common_dir}",
+    "-g",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/main3.fle"]
+return_code = 0
+
+[[run]]
+name = "Link program (test case 1)"
+command = "${root_dir}/ld"
+args = [
+    "${build_dir}/main1.fle",
+    "${build_dir}/test_utils.fle",
+    "${common_dir}/minilibc.fle",
+    "-o",
+    "${build_dir}/program1",
+]
+
+[run.check]
+files = ["${build_dir}/program1"]
+return_code = 0
+
+[[run]]
+name = "Link program (test case 2)"
+command = "${root_dir}/ld"
+args = [
+    "${build_dir}/main2.fle",
+    "${build_dir}/test_utils.fle",
+    "${common_dir}/minilibc.fle",
+    "-o",
+    "${build_dir}/program2",
+]
+
+[run.check]
+files = ["${build_dir}/program2"]
+return_code = 0
+
+[[run]]
+name = "Link program (test case 3)"
+command = "${root_dir}/ld"
+args = [
+    "${build_dir}/main3.fle",
+    "${build_dir}/test_utils.fle",
+    "${common_dir}/minilibc.fle",
+    "-o",
+    "${build_dir}/program3",
+]
+
+[run.check]
+files = ["${build_dir}/program3"]
+return_code = 0
+
+[[run]]
+name = "Test read-only section protection"
+command = "${root_dir}/exec"
+args = ["${build_dir}/program1"]
+score = 3.5
+must_pass = false
+
+[run.check]
+return_code = -11                # SIGSEGV when writing to read-only section
+stderr_pattern = "Error code: 2"
+
+[[run]]
+name = "Test non-executable section protection"
+command = "${root_dir}/exec"
+args = ["${build_dir}/program2"]
+score = 3.5
+must_pass = false
+
+[run.check]
+return_code = -11                # SIGSEGV when executing data section
+stderr_pattern = "Error code: 2"
+
+[[run]]
+name = "Test code section write protection"
+command = "${root_dir}/exec"
+args = ["${build_dir}/program3"]
+score = 3.0
+must_pass = false
+
+[run.check]
+return_code = -11                # SIGSEGV when writing to code section
+stderr_pattern = "Error code: 2"

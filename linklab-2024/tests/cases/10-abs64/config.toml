@@ -1,0 +1,41 @@
+[meta]
+name = "64-bit Absolute Relocation Test"
+description = "Test R_X86_64_64 relocation type with global pointer"
+score = 10
+
+[[run]]
+name = "Compile main.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/main.c",
+    "-o",
+    "${build_dir}/main.o",
+    "-I${common_dir}",
+    "-g",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/main.fle"]
+
+[[run]]
+name = "Link program"
+command = "${root_dir}/ld"
+args = [
+    "${build_dir}/main.fle",
+    "${common_dir}/minilibc.fle",
+    "-o",
+    "${build_dir}/program",
+]
+
+[run.check]
+files = ["${build_dir}/program"]
+
+[[run]]
+name = "Run program"
+command = "${root_dir}/exec"
+args = ["${build_dir}/program"]
+
+[run.check]
+stdout = "ans.out"
+return_code = 0 

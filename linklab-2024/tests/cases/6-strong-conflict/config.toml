@@ -1,0 +1,49 @@
+[meta]
+name = "Strong Symbol Conflict Test"
+description = "Test linker error on multiple strong symbols"
+score = 10
+
+[[run]]
+name = "Compile main.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/main.c",
+    "-o",
+    "${build_dir}/main.o",
+    "-I${common_dir}",
+    "-g",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/main.fle"]
+
+[[run]]
+name = "Compile conflict.c"
+command = "${root_dir}/cc"
+args = [
+    "${test_dir}/conflict.c",
+    "-o",
+    "${build_dir}/conflict.o",
+    "-I${common_dir}",
+    "-g",
+    "-Os",
+]
+
+[run.check]
+files = ["${build_dir}/conflict.fle"]
+
+[[run]]
+name = "Link program"
+command = "${root_dir}/ld"
+args = [
+    "${build_dir}/main.fle",
+    "${build_dir}/conflict.fle",
+    "${common_dir}/minilibc.fle",
+    "-o",
+    "${build_dir}/program",
+]
+
+[run.check]
+return_code = 1
+stderr_pattern = "(M|m)ultiple definition of strong symbol: global_var"

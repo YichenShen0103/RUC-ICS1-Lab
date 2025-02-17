@@ -1,0 +1,65 @@
+[debug]
+default_type = "cpp"
+
+[setup]
+# 在运行测试之前需要执行的准备步骤
+
+[[setup.steps]]
+name = "Compile FLE Tools"
+type = "command"
+command = "make"
+args = ["all", "-j"]
+required = true                                     # 如果这一步失败，则终止所有测试
+message = "Preparing FLE Tools..."
+success_message = "FLE Tools compiled successfully"
+timeout = 60.0
+
+[[setup.steps]]
+name = "Compile minilibc"
+type = "command"
+command = "./cc"
+args = ["tests/common/minilibc.c", "-o", "tests/common/minilibc.o"]
+required = true                                                     # 如果这一步失败，则终止所有测试
+message = "Preparing minilibc..."
+success_message = "minilibc compiled successfully"
+
+# 可以添加更多setup步骤
+# [[setup.steps]]
+# name = "其他准备步骤"
+# type = "command"  # 可以是普通命令
+# command = "./some_script.sh"
+# args = ["arg1", "arg2"]
+# required = false  # 这一步失败不会终止测试
+
+[paths]
+# 定义项目中重要路径的配置
+tests_dir = "tests"
+cases_dir = "tests/cases"
+common_dir = "tests/common"
+
+[grader]
+# 评分器的全局配置
+default_timeout = 5.0 # 默认超时时间（秒）
+
+[groups]
+# 定义测试点分组
+# 每个分组包含一个或多个测试点
+# 可以通过 --group 参数指定运行某个分组的所有测试点
+
+# 任务一：符号表查看器
+nm = ["1"]
+
+# 任务二：基础链接器（绝对地址重定位）
+basic_linking = ["2", "3"]
+
+# 任务三：相对重定位
+relative_reloc = ["4", "5"]
+
+# 任务四：处理符号冲突
+symbol_resolution = ["6", "7", "8", "9"]
+
+# 任务五：处理 64 位地址
+addr64 = ["10"]
+
+# 任务六：分离代码和数据
+section_perm = ["11", "12"]
