@@ -88,6 +88,11 @@ Introduction to Computer System 1 (ICS1) is a required course for undergraduate 
 
 ICS1 is a revision of the first half of CMU 15-213, which is a classic course in computer science.
 
+## PREPARATORY COURSES RECOMMENDATION
+
+If you find yourself unfamiliar with stuffs like `git`, `linux`, `ssh` or `shell`, the following course will be helpful:
+- MIT The Missing Semester of Your CS Education
+
 ## ABSTRACTIONS AND HINTS FOR EACH LAB
 
 ### Lab 1: Data Lab
@@ -139,6 +144,14 @@ Implement a toy linker `ld` to link the object files into an executable file. To
 1. You may only modify the file `ld.c` and `nm.c` in src/student.
 2. The README.md of this lab is well organized yet a little bit hard to understand. I will recommend you to carefully read the code framework and test cases to be more familiar with the FLE format and the requirements of this lab.
 3. Follow the steps the README.md tells you to do. It may help you to finish the lab more easily.
+
+## FOLLOW-UP COURSE RECOMMENDATION
+
+- MIT 6.S081 Operating System Engineering
+- MIT 6.824 Distributed System
+- Stanford CS144 Computer Networks
+- Stanford CS143: Compilers
+- CMU 15-445: Database Systems
 
 ## THINGS YOU SHOULD KNOW
 
