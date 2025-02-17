@@ -3,6 +3,21 @@
 > [!WARNING]
 > This is a repository for the lab assignments of the course Introduction to Computer Systems (ICS1) at Renmin University of China, **which is for reference only. Please do not copy the code directly.** There is actually a strict code duplication checking after the submission of each lab assignment. If you copy the code directly, you will be caught by the system and get a zero score for the assignment, which may be hard for you to afford.
 
+<p align="center">
+    <a href="README_zh.md">
+        <img src="https://img.shields.io/badge/简体中文-FF4500" alt="简体中文">
+    </a>  
+    &nbsp
+    <a href="README.md">
+        <img src="https://img.shields.io/badge/English-8A2BE2" alt="English">
+    </a> 
+</p>
+
+<p align="center">
+    <img src="https://img.shields.io/github/stars/YichenShen0103/RUC-ICS1-Lab?style=flat" alt="stars">
+    &nbsp
+    <img src="https://img.shields.io/github/issues/YichenShen0103/RUC-ICS1-Lab?style=social" alt="issues">
+</p>
 
 ## WHY THIS REPO?
 
