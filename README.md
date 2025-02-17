@@ -5,16 +5,12 @@
 
 <p align="center">
     <a href="README_zh.md">
-        <img src="https://img.shields.io/badge/简体中文-FF4500" alt="简体中文">
+        <img src="https://img.shields.io/badge/翻译至-简体中文-FF4500" alt="简体中文">
     </a>  
-    &nbsp
-    <a href="README.md">
-        <img src="https://img.shields.io/badge/English-8A2BE2" alt="English">
-    </a> 
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/github/stars/YichenShen0103/RUC-ICS1-Lab?style=flat" alt="stars">
+    <img src="https://img.shields.io/github/stars/YichenShen0103/RUC-ICS1-Lab" alt="stars">
     &nbsp
     <img src="https://img.shields.io/github/issues/YichenShen0103/RUC-ICS1-Lab?style=social" alt="issues">
 </p>

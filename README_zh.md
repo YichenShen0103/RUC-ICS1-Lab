@@ -5,12 +5,8 @@
 > 本仓库是中国人民大学《计算机系统导论（ICS1）》课程的实验作业存档，**仅供学习参考，请勿直接抄袭代码**。实验提交后会有严格的代码查重，若直接复制代码将被系统判定抄袭并导致作业零分，这一后果可能难以承受。
 
 <p align="center">
-    <a href="README_zh.md">
-        <img src="https://img.shields.io/badge/简体中文-FF4500" alt="简体中文">
-    </a>  
-    &nbsp
     <a href="README.md">
-        <img src="https://img.shields.io/badge/English-8A2BE2" alt="English">
+        <img src="https://img.shields.io/badge/Translate%20to-English-8A2BE2" alt="Translate to English">
     </a> 
 </p>
 
